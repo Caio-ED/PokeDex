@@ -1,0 +1,16 @@
+@font-face{font-family: Sun-Moon;
+    src:url(./font_pack__sun_and_moon_by_mucrush_d9t8kqh.ttf)}
+
+body {
+    background-image: url(./imagens/background.jpg);
+    font-family: 'Ubuntu', sans-serif;}
+
+div {
+    height: 1000px;
+    vertical-align: auto;
+    background-color:rgb(112, 112, 112);
+}
+
+img {
+    height: 200px;
+}

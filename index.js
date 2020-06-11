@@ -1,7 +1,4 @@
 
-var axios = require('axios')
-var rs = require('readline-sync')
-var fs = require('fs')
 
 // End Points da PokeApi
 const endPoint_Pokemon = "https://pokeapi.co/api/v2/pokemon/"
@@ -10,14 +7,15 @@ const endPoint_Pokemon = "https://pokeapi.co/api/v2/pokemon/"
 const endPoint_Tipo = 'https://pokeapi.co/api/v2/type/'
 const endPoint_Habilidade = 'https://pokeapi.co/api/v2/ability/'
 
-var Pokedex = fs.readFileSync('.Pokedex.json');
-    Pokedex = JSON.parse(Pokedex);
+const linkimagens= 'http://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png'
+const linkimagensAlt = 'https://pokeres.bastionbot.org/images/pokemon/1.png'
 
-var nome_ou_id = rs.question("Digite o nome de um Pokemon,ou seu id: ").toLocaleLowerCase();
-PegaPokemon(nome_ou_id, Pokedex)
+// var Pokedex = fs.readFileSync('.Pokedex.json');
+//     Pokedex = JSON.parse(Pokedex);
 
+function PegaPokemon() {
+    nome_ou_id = document.querySelector('#nomeid').value
 
-function PegaPokemon(nome_ou_id,Pokedex) {
     axios.get(endPoint_Pokemon + nome_ou_id)
         .then((resposta) => {
 
@@ -52,11 +50,11 @@ function PegaPokemon(nome_ou_id,Pokedex) {
                 naocausa_dano: []
             }
 
-            PegaDescriçãoHabilidades(url_habilidades,url_Tipos ,infoPokemons,Pokedex)
+            PegaDescriçãoHabilidades(url_habilidades,url_Tipos ,infoPokemons)
         })
 }
 
-function PegaDescriçãoHabilidades(url_habilidades ,url_Tipos ,infoPokemons, Pokedex) {
+function PegaDescriçãoHabilidades(url_habilidades ,url_Tipos ,infoPokemons) {
 
     //Para cada URL. de cada Habilidade
     url_habilidades.forEach((url, index) => {
@@ -75,13 +73,13 @@ function PegaDescriçãoHabilidades(url_habilidades ,url_Tipos ,infoPokemons, Po
                 descrições = `${nome}: ${descricao}\n`
                 infoPokemons.descricoes.push(descrições);
                 if(index == (url_habilidades.length - 1)) {
-                    PegaRelacaodeDanosEntreTipos(url_Tipos,infoPokemons,Pokedex)
+                    PegaRelacaodeDanosEntreTipos(url_Tipos,infoPokemons)
                 }
             })
     })
 }
 
-function PegaRelacaodeDanosEntreTipos(url_Tipos, infoPokemons,Pokedex) {
+function PegaRelacaodeDanosEntreTipos(url_Tipos, infoPokemons) {
     
 
     url_Tipos.forEach((url, index) => {
@@ -106,7 +104,7 @@ function PegaRelacaodeDanosEntreTipos(url_Tipos, infoPokemons,Pokedex) {
             infoPokemons.metade_dano.push(metade_dano);
             infoPokemons.naocausa_dano.push(naocausa_dano);
             if(index == (url_Tipos.length - 1)) {
-                ExibePokemon(infoPokemons,Pokedex);
+                ExibePokemon(infoPokemons);
             }
         })
 
@@ -123,7 +121,16 @@ function ExibePokemon(infoPokemons,Pokedex){
     dobro_dano,
     metade_dano,
     naocausa_dano } = infoPokemons
+    
+    document.getElementById('nome').innerText = `Nome: ${nome}`
+    document.getElementById('tipo').innerText = `Tipo: ${tipo}`
+    document.getElementById('habilidades').innerText = `Habilidades: ${habilidade}`
+    document.getElementById('Rdano').innerText = `Descriçao Habilidades:\n ${String(descricoes).replace(',',' ')}`
+    document.getElementById('foto').src = 'https://pokeres.bastionbot.org/images/pokemon/'+ id +'.png'
 
+
+
+        
     console.log(`\
             \n======= Pokemon ===================\
             \nNome: ${nome} id: ${id}\
@@ -136,7 +143,7 @@ function ExibePokemon(infoPokemons,Pokedex){
             \nMetade de Dano: ${metade_dano}\
             \nNão Causa Dano: ${naocausa_dano}`)
 
-        VerificaPokemonNaPokeDex(id, infoPokemons,Pokedex)
+        // VerificaPokemonNaPokeDex(id, infoPokemons,Pokedex)
 }
 
 function VerificaPokemonNaPokeDex(id, infoPokemons,Pokedex) {
