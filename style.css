@@ -13,6 +13,8 @@ div {
 }
 .container{
     background: none;
+    border-radius: 10px;
+    padding: 2% 5% 0% 5%;
 }
 img {
     height: 200px;
@@ -22,29 +24,36 @@ img {
     justify-self: center;
     padding-bottom: 5%;
 }
-
+#habilidades, .descricao{
+    background-color: #00000027;
+}
 p{
     margin-top: 2%;
 }
 li,ul{
     display: inline;
+    margin-right: 2%;
 }
 
 #infoPoke {
-    font-family: 'Sun-Moon';
-    font-size: 12px;
+    font-size: 18px;
     color: #000000;
-    background-color: rgb(107, 105, 94);
     padding: 5%;
     padding-left: 5%;
-    margin: 5% 0% 5% 0%;
-    border-radius: 10px;
+    margin: 5% 0% 0% 0%;
 }
+
+#nomeid{
+    display: inline;
+    width: 50%;
+}
+
 li{
     border-radius: 90px;
     padding: 8px 12px 5px 12px;
+    font-family: 'Sun-Moon';
+    font-size: 12px;
 }
-
 .normal{ background-color: rgb(255, 136, 0);}
 .fighting{ background-color: rgb(141, 29, 48);}
 .flying{ background-color: rgb(130, 199, 190);}
@@ -67,8 +76,4 @@ li{
 .shadow{ background-color: 	#1C1C1C; color: azure;}
 
 
-#nomeid{
-    display: inline;
-    width: 50%;
-}
 

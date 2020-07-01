@@ -19,19 +19,22 @@
         <span class="navbar-brand mb-0 h1">PokeDex</span>
     </nav>
 
-    <div class="container col-md-8 ">
-            <button id="btnPesquisa" type="submit" onclick ="PegaPokemon()" class="btn btn-dark">Pesquisar</button>
+    <div class="container col-md-8 bg-dark ">
+            <button id="btnPesquisa" type="submit" onclick ="PegaPokemon()" class="btn btn-secondary">Pesquisar</button>
             <input class="form-control" type="text" id="nomeid" placeholder="Nome ou numero do Pokemon">
             
             <div id="infoPoke" class="bg-dark">
                 <img id="foto" src="" alt="" class="">
+                <hr>
                 <p id="nome"></p>
 
                 Tipo:
                 <ul> 
                 </ul>
+
                 <p id="habilidades"></p>
-                <label id='descHab'>Descricao das Habilidades</label>
+                <hr>
+                <label id='descHab'>Descrição das Habilidades: </label>
             </div>
     </div>
 
