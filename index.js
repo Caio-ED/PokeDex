@@ -16,7 +16,7 @@ function PegaPokemon() {
    var nome_ou_id = document.querySelector('#nomeid').value
 
    if (nome_ou_id == false) { 
-       nome_ou_id = (Math.random() * 10 + 1).toFixed()
+       nome_ou_id = Math.floor(Math.random() * (807 + 1))
    }
 
     axios.get(endPoint_Pokemon + nome_ou_id)
@@ -126,7 +126,15 @@ function ExibePokemon(infoPokemons,Pokedex){
     naocausa_dano } = infoPokemons
     
     document.getElementById('nome').innerText = `Nome: ${nome}`
-    document.getElementById('tipo').innerText = `Tipo: ${tipo}`
+
+    tipo.forEach((tipo) => {
+        var lista = document.querySelector('ul')
+        var item = document.createElement('li')
+        item.innerText = tipo
+        lista.append(item)
+        AddClasse_doTipo(item,tipo);
+    })
+    
     document.getElementById('habilidades').innerText = `Habilidades: ${habilidade}`
     
     descricoes.forEach((desc => {
@@ -197,9 +205,76 @@ function PegaPokemonsdoMesmoTipo(tipos){
 }
 
 function LimpaHabilidades(){
-    var sujeira = document.querySelectorAll('.descricao')
-        sujeira.forEach(p => {
+    var sujeira_desc = document.querySelectorAll('.descricao')
+        sujeira_desc.forEach(p => {
+            p.remove()
+        })
+
+    var sujeira_tipo = document.querySelectorAll('li');
+        sujeira_tipo.forEach(p => {
             p.remove()
         })
 }
 
+function AddClasse_doTipo(item, tipo){
+    if(tipo == 'normal'){
+        item.setAttribute('class','normal')
+    }
+    if(tipo == 'fighting'){
+        item.setAttribute('class','fighting')
+    }
+    if(tipo == 'flying'){
+        item.setAttribute('class','flying')
+    }
+    if(tipo == 'poison'){
+        item.setAttribute('class','poison')
+    }
+    if(tipo == 'ground'){
+        item.setAttribute('class','ground')
+    }
+    if(tipo == 'rock'){
+        item.setAttribute('class','rock')
+    }
+    if(tipo == 'bug'){
+        item.setAttribute('class','bug')
+    }
+    if(tipo == 'ghost'){
+        item.setAttribute('class','ghost')
+    }
+    if(tipo == 'steel'){
+        item.setAttribute('class','steel')
+    }
+    if(tipo == 'fire'){
+        item.setAttribute('class','fire')
+    }
+    if(tipo == 'water'){
+        item.setAttribute('class','water')
+    }
+    if(tipo == 'grass'){
+        item.setAttribute('class','grass')
+    }
+    if(tipo == 'electric'){
+        item.setAttribute('class','electric')
+    }
+    if(tipo == 'psychic'){
+        item.setAttribute('class','psychic')
+    }
+    if(tipo == 'ice'){
+        item.setAttribute('class','ice')
+    }
+    if(tipo == 'dragon'){
+        item.setAttribute('class','dragon')
+    }
+    if(tipo == 'dark'){
+        item.setAttribute('class','dark')
+    }
+    if(tipo == 'fairy'){
+        item.setAttribute('class','fairy')
+    }
+    if(tipo == 'unknown'){
+        item.setAttribute('class','unknown')
+    }
+    if(tipo == 'shadow'){
+        item.setAttribute('class','shadow')
+    }
+}

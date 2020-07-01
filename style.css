@@ -23,6 +23,13 @@ img {
     padding-bottom: 5%;
 }
 
+p{
+    margin-top: 2%;
+}
+li,ul{
+    display: inline;
+}
+
 #infoPoke {
     font-family: 'Sun-Moon';
     font-size: 12px;
@@ -33,11 +40,33 @@ img {
     margin: 5% 0% 5% 0%;
     border-radius: 10px;
 }
-/* #tipo{
+li{
     border-radius: 90px;
-    background-color: darkolivegreen;
-    padding: 2px;
-} */
+    padding: 8px 12px 5px 12px;
+}
+
+.normal{ background-color: rgb(255, 136, 0);}
+.fighting{ background-color: rgb(141, 29, 48);}
+.flying{ background-color: rgb(130, 199, 190);}
+.poison{ background-color: rgb(75, 10, 75);}
+.ground{ background-color: 	#CD9B1D;}
+.rock{ background-color: #8B6914;}
+.bug{ background-color: #9ACD32;}
+.ghost { background-color: #F0FFFF;}
+.steel{ background-color: #9C9C9C;}
+.fire{ background-color: #EE0000;}
+.water{ background-color: rgb(0, 102, 255);}
+.grass{ background-color: #6B8E23;}
+.electric{ background-color: #FFFF00;}
+.psychic{ background-color: #FF1493;}
+.ice{ background-color: #7AC5CD;}
+.dragon{ background-color: #FF4500;}
+.dark{ background-color: #000000; color: azure;}
+.fairy{ background-color: 	#DB7093;}
+.unknown{ background-color: #2F4F4F;}
+.shadow{ background-color: 	#1C1C1C; color: azure;}
+
+
 #nomeid{
     display: inline;
     width: 50%;
