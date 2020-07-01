@@ -3,14 +3,43 @@
 
 body {
     background-image: url(./imagens/background.jpg);
-    font-family: 'Ubuntu', sans-serif;}
-
-div {
-    height: 1000px;
-    vertical-align: auto;
-    background-color:rgb(112, 112, 112);
+    font-family: 'Ubuntu', sans-serif;
 }
 
+div {
+    vertical-align: auto;
+    background-color:rgb(112, 112, 112);
+    margin-top: 2%;
+}
+.container{
+    background: none;
+}
 img {
     height: 200px;
 }
+
+#foto{
+    justify-self: center;
+    padding-bottom: 5%;
+}
+
+#infoPoke {
+    font-family: 'Sun-Moon';
+    font-size: 12px;
+    color: #000000;
+    background-color: rgb(107, 105, 94);
+    padding: 5%;
+    padding-left: 5%;
+    margin: 5% 0% 5% 0%;
+    border-radius: 10px;
+}
+/* #tipo{
+    border-radius: 90px;
+    background-color: darkolivegreen;
+    padding: 2px;
+} */
+#nomeid{
+    display: inline;
+    width: 50%;
+}
+
