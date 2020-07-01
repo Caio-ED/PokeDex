@@ -1,5 +1,3 @@
-
-
 // End Points da PokeApi
 const endPoint_Pokemon = "https://pokeapi.co/api/v2/pokemon/"
 
@@ -13,36 +11,41 @@ const linkimagensAlt = 'https://pokeres.bastionbot.org/images/pokemon/1.png'
 // var Pokedex = fs.readFileSync('.Pokedex.json');
 //     Pokedex = JSON.parse(Pokedex);
 
+window.onload = PegaPokemon()
 function PegaPokemon() {
-    nome_ou_id = document.querySelector('#nomeid').value
+   var nome_ou_id = document.querySelector('#nomeid').value
+
+   if (nome_ou_id == false) { 
+       nome_ou_id = (Math.random() * 10 + 1).toFixed()
+   }
 
     axios.get(endPoint_Pokemon + nome_ou_id)
         .then((resposta) => {
 
             var Pokemon = resposta.data //objeto do Pokemon
-
+            document.getElementById('foto').src = 'https://pokeres.bastionbot.org/images/pokemon/'+ Pokemon.id +'.png'
             var habilidades = []
             var url_habilidades = []
 
-            var tipo_Pokemon = []
+            var tipos_Pokemon = []
             var url_Tipos = []
 
                                         // Logica para extrair nome e url das habilidades
             Pokemon.abilities.forEach((habilidade) => {
                 habilidades.push(habilidade.ability.name)
                 url_habilidades.push(habilidade.ability.url)
-            });
+            }); 
             
                                         // Logica para extrair nome e url dos tipos
             Pokemon.types.forEach((tipos) => {
-                tipo_Pokemon.push(tipos.type.name)
+                tipos_Pokemon.push(tipos.type.name)
                 url_Tipos.push(tipos.type.url)
             })
 
             infoPokemons = {
                 id: Pokemon.id,
                 nome: Pokemon.name,
-                tipo: tipo_Pokemon,
+                tipo: tipos_Pokemon,
                 habilidade: habilidades,
                 descricoes: [],
                 dobro_dano: [],
@@ -51,38 +54,37 @@ function PegaPokemon() {
             }
 
             PegaDescriçãoHabilidades(url_habilidades,url_Tipos ,infoPokemons)
+            PegaPokemonsdoMesmoTipo(tipos_Pokemon)
         })
 }
 
-function PegaDescriçãoHabilidades(url_habilidades ,url_Tipos ,infoPokemons) {
+async function PegaDescriçãoHabilidades(url_habilidades ,url_Tipos ,infoPokemons) {
 
     //Para cada URL. de cada Habilidade
-    url_habilidades.forEach((url, index) => {
+     await url_habilidades.forEach((url, index) => {
         axios.get(url)
             .then((respostaURL) => {
                 let habilidade = respostaURL.data
-                let nome, descricao = ''
+                let nome, descricao 
 
-                descricao = habilidade.effect_entries.map(valor => {
-                    if(valor.language.name == 'en'){
-                        return valor.short_effect
-                    }
-                })
-                // descricao = habilidade.effect_entries[0].short_effect
+                var entrie = habilidade.effect_entries.find( (valor) => valor.language.name == 'en')
+                descricao = entrie.short_effect
+
                 nome = habilidade.name
-                descrições = `${nome}: ${descricao}\n`
+                descrições = `${nome}: ${descricao}`
                 infoPokemons.descricoes.push(descrições);
                 if(index == (url_habilidades.length - 1)) {
                     PegaRelacaodeDanosEntreTipos(url_Tipos,infoPokemons)
                 }
+
             })
     })
 }
 
-function PegaRelacaodeDanosEntreTipos(url_Tipos, infoPokemons) {
+async function PegaRelacaodeDanosEntreTipos(url_Tipos, infoPokemons) {
     
 
-    url_Tipos.forEach((url, index) => {
+   await url_Tipos.forEach((url, index) => {
 
         axios.get(url)
         .then(response => {
@@ -112,6 +114,7 @@ function PegaRelacaodeDanosEntreTipos(url_Tipos, infoPokemons) {
 }
 
 function ExibePokemon(infoPokemons,Pokedex){
+    LimpaHabilidades()
     const {
     id,
     nome,
@@ -125,8 +128,15 @@ function ExibePokemon(infoPokemons,Pokedex){
     document.getElementById('nome').innerText = `Nome: ${nome}`
     document.getElementById('tipo').innerText = `Tipo: ${tipo}`
     document.getElementById('habilidades').innerText = `Habilidades: ${habilidade}`
-    document.getElementById('Rdano').innerText = `Descriçao Habilidades:\n ${String(descricoes).replace(',',' ')}`
-    document.getElementById('foto').src = 'https://pokeres.bastionbot.org/images/pokemon/'+ id +'.png'
+    
+    descricoes.forEach((desc => {
+        var infoPoke = document.getElementById('infoPoke')
+        var pdescricao = document.createElement('p')
+        pdescricao.setAttribute('class', 'descricao')
+         pdescricao.innerHTML = desc
+        infoPoke.append(pdescricao)
+    }))
+    
 
 
 
@@ -137,8 +147,9 @@ function ExibePokemon(infoPokemons,Pokedex){
             \nTipo: ${tipo}\
             \nHabilidades: ${habilidade}\
             \n------- Detalhes ------------------\
-            \nDescriçao Habilidades:\n ${String(descricoes).replace(',',' ')}\
-            \n------- Relações de Dano ----------\
+            \nDescriçao Habilidades:\n`)
+    descricoes.forEach(des => console.log(des))
+    console.log(`\n------- Relações de Dano ----------\
             \nDobro de Dano: ${dobro_dano}\
             \nMetade de Dano: ${metade_dano}\
             \nNão Causa Dano: ${naocausa_dano}`)
@@ -171,6 +182,24 @@ function VerificaPokemonNaPokeDex(id, infoPokemons,Pokedex) {
     }
 }
 
+function PegaPokemonsdoMesmoTipo(tipos){
+    tipos.forEach((tipo) => {
+        axios.get('https://pokeapi.co/api/v2/type/'+ tipo)
+            .then((resposta) => {
+                pokemons_do_mesmo_tipo = resposta.data.pokemon;
+                // console.log(pokemons_do_mesmo_tipo)
 
+            })
+            .catch((erro) => {
+                console.log(erro);
+            });
+    })
+}
 
+function LimpaHabilidades(){
+    var sujeira = document.querySelectorAll('.descricao')
+        sujeira.forEach(p => {
+            p.remove()
+        })
+}
 
